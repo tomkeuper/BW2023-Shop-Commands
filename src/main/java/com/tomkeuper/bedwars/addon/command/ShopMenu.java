@@ -15,6 +15,7 @@ import java.util.List;
 public class ShopMenu extends SubCommand {
     public ShopMenu(ParentCommand parent, String name) {
         super(parent, name);
+        showInList(false);
     }
 
     @Override
