@@ -1,6 +1,8 @@
 package com.tomkeuper.bedwars.addon;
 
 import com.avaje.ebeaninternal.server.lib.util.NotFoundException;
+import com.tomkeuper.bedwars.addon.command.ShopMenu;
+import com.tomkeuper.bedwars.addon.command.UpgradesMenu;
 import com.tomkeuper.bedwars.addon.integrations.BedWars2023;
 import com.tomkeuper.bedwars.addon.integrations.IIntegration;
 import com.tomkeuper.bedwars.api.BedWars;
@@ -22,6 +24,9 @@ public class ShopCommands extends JavaPlugin {
     @Override
     public void onEnable() {
         populateIntegrations(new BedWars2023(this, bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider()));
+
+        bedWars.getBedWarsCommand().addSubCommand(new ShopMenu(bedWars.getBedWarsCommand(), "shop"));
+        bedWars.getBedWarsCommand().addSubCommand(new UpgradesMenu(bedWars.getBedWarsCommand(), "upgrades"));
     }
 
     private void populateIntegrations(IIntegration... integrations) {
