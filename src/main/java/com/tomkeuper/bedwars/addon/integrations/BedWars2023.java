@@ -27,7 +27,6 @@ public class BedWars2023 implements IIntegration{
     @Override
     public boolean isEnabled() {
         return Bukkit.getPluginManager().isPluginEnabled("BedWars2023");
-
     }
 
     @Override
@@ -35,10 +34,19 @@ public class BedWars2023 implements IIntegration{
         if (isPresent()){
             this.bedwars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
             bedwars.getAddonsUtil().registerAddon(new BW2023());
-            plugin.getLogger().info("&fBedWars was found and hooked &aSuccessfully&f!");
+            plugin.getLogger().info("BedWars2023 was found and hooked Successfully!");
+
+            bedwars.getConfigs().getMainConfig().getYml().addDefault("shopcommands.only-own-shop", true);
+            bedwars.getConfigs().getMainConfig().getYml().addDefault("shopcommands.only-own-upgrades", true);
+            bedwars.getConfigs().getMainConfig().getYml().options().copyDefaults(true);
+            bedwars.getConfigs().getMainConfig().save();
+
+            plugin.onlyOwnShop = bedwars.getConfigs().getMainConfig().getYml().getBoolean("shopcommands.only-own-shop");
+            plugin.onlyOwnUpgrades = bedwars.getConfigs().getMainConfig().getYml().getBoolean("shopcommands.only-own-upgrades");
+
             return true;
         } else {
-            plugin.getLogger().severe("&cBedWars could not be located and is required to use this addon!");
+            plugin.getLogger().severe("BedWars could not be located and is required to use this addon!");
             return false;
         }
     }

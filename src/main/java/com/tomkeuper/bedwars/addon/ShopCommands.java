@@ -15,6 +15,7 @@ import java.util.Arrays;
 public class ShopCommands extends JavaPlugin {
     public static BedWars bedWars;
     public static ShopCommands plugin;
+    public boolean onlyOwnShop, onlyOwnUpgrades = true;
 
     @Override
     public void onLoad() {

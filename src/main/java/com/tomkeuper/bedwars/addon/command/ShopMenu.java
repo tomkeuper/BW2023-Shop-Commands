@@ -7,10 +7,12 @@ import com.tomkeuper.bedwars.api.arena.team.ITeam;
 import com.tomkeuper.bedwars.api.command.ParentCommand;
 import com.tomkeuper.bedwars.api.command.SubCommand;
 import com.tomkeuper.bedwars.api.shop.IPlayerQuickBuyCache;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ShopMenu extends SubCommand {
     public ShopMenu(ParentCommand parent, String name) {
@@ -26,12 +28,24 @@ public class ShopMenu extends SubCommand {
         if (a == null) return false;
         if (a.getStatus() != GameState.playing) return false;
         if (!a.isPlayer((Player) commandSender)) return false;
-        ITeam t = a.getTeam((Player) commandSender);
-        if (t.getShop().distance(((Player)commandSender).getLocation()) < 4){
-            IPlayerQuickBuyCache quickBuyCache = ShopCommands.getBedWars().getShopUtil().getPlayerQuickBuyCache().getQuickBuyCache(((Player) commandSender).getUniqueId());
-            ShopCommands.getBedWars().getShopUtil().getShopManager().getShop().open((Player) commandSender, quickBuyCache,true);
 
-            return true;
+        AtomicBoolean found = new AtomicBoolean(false);
+        if (ShopCommands.plugin.onlyOwnShop){
+            ITeam team = a.getTeam((Player) commandSender);
+            if (team == null) return false;
+            if (team.getShop().distance(((Player)commandSender).getLocation()) < 4){
+                IPlayerQuickBuyCache quickBuyCache = ShopCommands.getBedWars().getShopUtil().getPlayerQuickBuyCache().getQuickBuyCache(((Player) commandSender).getUniqueId());
+                ShopCommands.getBedWars().getShopUtil().getShopManager().getShop().open((Player) commandSender, quickBuyCache,true);
+                found.set(true);
+            }
+        } else {
+            a.getTeams().forEach(team -> {
+                if (team.getShop().distance(((Player)commandSender).getLocation()) < 4){
+                    IPlayerQuickBuyCache quickBuyCache = ShopCommands.getBedWars().getShopUtil().getPlayerQuickBuyCache().getQuickBuyCache(((Player) commandSender).getUniqueId());
+                    ShopCommands.getBedWars().getShopUtil().getShopManager().getShop().open((Player) commandSender, quickBuyCache,true);
+                    found.set(true);
+                }
+            });
         }
         return false;
     }
