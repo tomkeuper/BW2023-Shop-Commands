@@ -6,7 +6,6 @@ import com.tomkeuper.bedwars.api.arena.IArena;
 import com.tomkeuper.bedwars.api.arena.team.ITeam;
 import com.tomkeuper.bedwars.api.command.ParentCommand;
 import com.tomkeuper.bedwars.api.command.SubCommand;
-import com.tomkeuper.bedwars.api.shop.IPlayerQuickBuyCache;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -32,13 +31,13 @@ public class UpgradesMenu extends SubCommand {
         if (ShopCommands.plugin.onlyOwnUpgrades){
             ITeam team = a.getTeam((Player) commandSender);
             if (team == null) return false;
-            if (team.getTeamUpgrades().distance(((Player)commandSender).getLocation()) < 4){
+            if (team.getTeamUpgrades().distance(((Player)commandSender).getLocation()) < ShopCommands.plugin.shopDistance){
                 ShopCommands.getBedWars().getTeamUpgradesUtil().getMenuForArena(a).open((Player) commandSender);
                 found.set(true);
             }
         } else {
             a.getTeams().forEach(team -> {
-                if (team.getTeamUpgrades().distance(((Player)commandSender).getLocation()) < 4){
+                if (team.getTeamUpgrades().distance(((Player)commandSender).getLocation()) < ShopCommands.plugin.shopDistance){
                     ShopCommands.getBedWars().getTeamUpgradesUtil().getMenuForArena(a).open((Player) commandSender);
                     found.set(true);
                 }

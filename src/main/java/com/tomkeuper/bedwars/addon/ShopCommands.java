@@ -16,6 +16,7 @@ public class ShopCommands extends JavaPlugin {
     public static BedWars bedWars;
     public static ShopCommands plugin;
     public boolean onlyOwnShop, onlyOwnUpgrades = true;
+    public int shopDistance = 4;
 
     @Override
     public void onLoad() {

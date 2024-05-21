@@ -33,14 +33,14 @@ public class ShopMenu extends SubCommand {
         if (ShopCommands.plugin.onlyOwnShop){
             ITeam team = a.getTeam((Player) commandSender);
             if (team == null) return false;
-            if (team.getShop().distance(((Player)commandSender).getLocation()) < 4){
+            if (team.getShop().distance(((Player)commandSender).getLocation()) < ShopCommands.plugin.shopDistance){
                 IPlayerQuickBuyCache quickBuyCache = ShopCommands.getBedWars().getShopUtil().getPlayerQuickBuyCache().getQuickBuyCache(((Player) commandSender).getUniqueId());
                 ShopCommands.getBedWars().getShopUtil().getShopManager().getShop().open((Player) commandSender, quickBuyCache,true);
                 found.set(true);
             }
         } else {
             a.getTeams().forEach(team -> {
-                if (team.getShop().distance(((Player)commandSender).getLocation()) < 4){
+                if (team.getShop().distance(((Player)commandSender).getLocation()) < ShopCommands.plugin.shopDistance){
                     IPlayerQuickBuyCache quickBuyCache = ShopCommands.getBedWars().getShopUtil().getPlayerQuickBuyCache().getQuickBuyCache(((Player) commandSender).getUniqueId());
                     ShopCommands.getBedWars().getShopUtil().getShopManager().getShop().open((Player) commandSender, quickBuyCache,true);
                     found.set(true);

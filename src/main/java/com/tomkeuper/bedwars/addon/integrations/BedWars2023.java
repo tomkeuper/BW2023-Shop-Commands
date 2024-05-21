@@ -38,11 +38,13 @@ public class BedWars2023 implements IIntegration{
 
             bedwars.getConfigs().getMainConfig().getYml().addDefault("shopcommands.only-own-shop", true);
             bedwars.getConfigs().getMainConfig().getYml().addDefault("shopcommands.only-own-upgrades", true);
+            bedwars.getConfigs().getMainConfig().getYml().addDefault("shopcommands.shop-open-distance", 4);
             bedwars.getConfigs().getMainConfig().getYml().options().copyDefaults(true);
             bedwars.getConfigs().getMainConfig().save();
 
             plugin.onlyOwnShop = bedwars.getConfigs().getMainConfig().getYml().getBoolean("shopcommands.only-own-shop");
             plugin.onlyOwnUpgrades = bedwars.getConfigs().getMainConfig().getYml().getBoolean("shopcommands.only-own-upgrades");
+            plugin.shopDistance = bedwars.getConfigs().getMainConfig().getYml().getInt("shopcommands.shop-open-distance");
 
             return true;
         } else {
