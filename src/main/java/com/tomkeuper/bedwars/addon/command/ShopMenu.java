@@ -47,7 +47,8 @@ public class ShopMenu extends SubCommand {
                 }
             });
         }
-        return false;
+
+        return found.get();
     }
 
     @Override
